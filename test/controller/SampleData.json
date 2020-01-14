@@ -1,0 +1,20 @@
+{
+  "addBook200": {
+    "id": "01",
+    "author": "chetan bhagat",
+    "title": "aaaa",
+    "image": "sdfsdf",
+    "quantity": "12",
+    "price": "123",
+    "description": "uysdfgyu aogfuhuhu"
+  },
+  "addBook422": {
+    "id": "",
+    "author": "",
+    "title": "",
+    "image": "",
+    "quantity": "",
+    "price": "",
+    "description": ""
+  }
+}

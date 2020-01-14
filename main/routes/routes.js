@@ -1,7 +1,6 @@
-var express = require('express');
-var router = express.Router();
-let controller = require('../controller/controller')
+const express = require('express');
+const router = express.Router();
+let controller = require('../controller/controller');
 
-/* GET home page. */
-// router.get('/', );
+router.post('/addBook', controller.addBookController);
 module.exports = router;
