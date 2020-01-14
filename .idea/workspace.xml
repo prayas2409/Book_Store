@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ac45a41c-50b0-4914-9f38-0c2401c8ec76" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test/controller/SampleData.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/bin/www" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/db.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/db.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/controller/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/main/controller/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/routes/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/main/routes/routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/model/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/main/model/model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/service/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/main/service/service.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/controller/controllerTest.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/controller/controllerTest.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +46,7 @@
       <recent name="$PROJECT_DIR$/.idea" />
     </key>
   </component>
-  <component name="RunManager" selected="Mocha.book list (1)">
+  <component name="RunManager" selected="Node.js.bin/www">
     <configuration name="bin/www" type="NodeJSConfigurationType" path-to-js-file="bin/www" working-dir="$PROJECT_DIR$">
       <envs>
         <env name="DEBUG" value="book-store:*" />
@@ -172,7 +167,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1578997314082</updated>
-      <workItem from="1578997323634" duration="12571000" />
+      <workItem from="1578997323634" duration="14436000" />
     </task>
     <servers />
   </component>
@@ -192,22 +187,22 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="499" y="154" width="424" height="484" key="FileChooserDialogImpl/67.27.1299.741@67.27.1299.741" timestamp="1579004278509" />
-    <state width="1253" height="193" key="GridCell.Tab.0.bottom" timestamp="1579009820429">
+    <state width="1253" height="193" key="GridCell.Tab.0.bottom" timestamp="1579011805007">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state width="1253" height="193" key="GridCell.Tab.0.bottom/67.27.1299.741@67.27.1299.741" timestamp="1579009820429" />
-    <state width="1253" height="193" key="GridCell.Tab.0.center" timestamp="1579009820429">
+    <state width="1253" height="193" key="GridCell.Tab.0.bottom/67.27.1299.741@67.27.1299.741" timestamp="1579011805007" />
+    <state width="1253" height="193" key="GridCell.Tab.0.center" timestamp="1579011805007">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state width="1253" height="193" key="GridCell.Tab.0.center/67.27.1299.741@67.27.1299.741" timestamp="1579009820429" />
-    <state width="1253" height="193" key="GridCell.Tab.0.left" timestamp="1579009820428">
+    <state width="1253" height="193" key="GridCell.Tab.0.center/67.27.1299.741@67.27.1299.741" timestamp="1579011805007" />
+    <state width="1253" height="193" key="GridCell.Tab.0.left" timestamp="1579011805007">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state width="1253" height="193" key="GridCell.Tab.0.left/67.27.1299.741@67.27.1299.741" timestamp="1579009820428" />
-    <state width="1253" height="193" key="GridCell.Tab.0.right" timestamp="1579009820429">
+    <state width="1253" height="193" key="GridCell.Tab.0.left/67.27.1299.741@67.27.1299.741" timestamp="1579011805007" />
+    <state width="1253" height="193" key="GridCell.Tab.0.right" timestamp="1579011805007">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state width="1253" height="193" key="GridCell.Tab.0.right/67.27.1299.741@67.27.1299.741" timestamp="1579009820429" />
+    <state width="1253" height="193" key="GridCell.Tab.0.right/67.27.1299.741@67.27.1299.741" timestamp="1579011805007" />
     <state width="1253" height="219" key="GridCell.Tab.1.bottom" timestamp="1579003468046">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
@@ -264,5 +259,8 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="67" y="123" width="1289" height="547" key="new project wizard/67.27.1299.741@67.27.1299.741" timestamp="1579004430276" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Book_Store$book_list__1_.dat" NAME="book list (1) Coverage Results" MODIFIED="1579010080492" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="MochaJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

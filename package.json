@@ -17,6 +17,7 @@
     "body-parser": "latest"
   },
   "devDependencies": {
-    "chai": "^4.2.0"
+    "chai": "^4.2.0",
+    "nyc": "^15.0.0"
   }
 }
