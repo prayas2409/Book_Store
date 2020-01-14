@@ -3,5 +3,5 @@ var router = express.Router();
 let controller = require('../controller/controller')
 
 /* GET home page. */
-// router.get('/', );
+router.get('/books', controller.getAllBooks);
 module.exports = router;
