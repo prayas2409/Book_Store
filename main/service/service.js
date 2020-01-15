@@ -2,13 +2,17 @@ const model = require('../model/model');
 
 class Service {
     addBookService(req, callback) {
-        model.create(req, (err, data) => {
-            if (err) {
-                return callback(err);
-            } else {
-                return callback(null, data);
-            }
-        })
+        try {
+            model.create(req, (err, data) => {
+                if (err) {
+                    return callback(err);
+                } else {
+                    return callback(null, data);
+                }
+            })
+        } catch (err) {
+            return callback(err);
+        }
     }
 }
 

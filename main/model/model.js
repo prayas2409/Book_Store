@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 const mongoSchema = mongoose.Schema;
+
 const bookSchema = new mongoSchema(
     {
         "id": {
             type: String,
-            require: [true, "id is required"]
+            require: [true, "id is required"],
+            unique: true
         },
         "author": {
             type: String,
@@ -19,39 +21,37 @@ const bookSchema = new mongoSchema(
         },
         "quantity": {
             type: String,
+            require: [true, "quantity is required"]
         },
         "price": {
-            type: String
-        }, "description": {
             type: String,
+            require: [true, "price is required"]
+        },
+        "description": {
+            type: String
         },
     },
     {
         timestamps: true
     });
+
 const books = mongoose.model('books', bookSchema);
 
 class Model {
 
     create(req, callback) {
-        let bookAdd = new books(req)
-        bookAdd.save((err, data) => {
-            if (err) {
-                return callback({message: "Failed to add book!", error: err});
-            } else {
-                return callback(null, {message: "Book Added Successfully!", result: data})
-            }
-        })
-    }
-
-    read(field, callBack) {
-        books.find(field, (err, result) => {
-            if (err) {
-                return callBack(err);
-            } else {
-                return callBack(null, result);
-            }
-        })
+        try {
+            let bookAdd = new books(req);
+            bookAdd.save((err, data) => {
+                if (err) {
+                    return callback({message: "Failed to add book!", error: err});
+                } else {
+                    return callback(null, {message: "Book Added Successfully!", result: data});
+                }
+            });
+        } catch (err) {
+            return callback(err);
+        }
     }
 
 }
