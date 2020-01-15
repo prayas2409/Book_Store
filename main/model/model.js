@@ -20,11 +20,11 @@ const bookSchema = new mongoSchema(
             type: String
         },
         "quantity": {
-            type: String,
+            type: Number,
             require: [true, "quantity is required"]
         },
         "price": {
-            type: String,
+            type: Number,
             require: [true, "price is required"]
         },
         "description": {
