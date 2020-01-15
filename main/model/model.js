@@ -10,25 +10,33 @@ const bookSchema = new mongoSchema(
         },
         "author": {
             type: String,
+            min: [3, 'Too small'],
+            max: [20, 'To large'],
             require: [true, "author is required"]
         },
         "title": {
             type: String,
+            min: [5, 'Too small'],
+            max: [40, 'To large'],
             require: [true, "title is required"]
         },
         "image": {
-            type: String
+            type: String,
+            require: [true, "image is required"]
         },
         "quantity": {
             type: Number,
+            min: 0,
             require: [true, "quantity is required"]
         },
         "price": {
             type: Number,
+            min: 0,
             require: [true, "price is required"]
         },
         "description": {
-            type: String
+            type: String,
+            require: [true, "description is required"]
         }
     }, {
         timestamps: true
