@@ -21,4 +21,14 @@ app.use(cookieParser());
 app.use('/', router);
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((error, req, res, next) => {
+
+    let response = {
+        success: false,
+        status: 500,
+        message: error.message,
+    }
+    res.json(response);
+})
+
 module.exports = app;

@@ -37,7 +37,7 @@ const books = mongoose.model('books', bookSchema);
 
 class Model {
 
-    create(req, callback) {
+    create(req, callback, next) {
         try {
             let bookAdd = new books(req);
             bookAdd.save((err, data) => {
@@ -48,11 +48,11 @@ class Model {
                 }
             });
         } catch (err) {
-            return callback(err);
+            return next(err);
         }
     }
 
-    read(field, callBack) {
+    read(field, callBack, next) {
         try {
             books.find(field, (err, result) => {
                 if (err) {
@@ -62,8 +62,7 @@ class Model {
                 }
             });
         } catch (err) {
-            return callBack(err);
-
+            return next(err);
         }
     }
 
