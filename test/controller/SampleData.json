@@ -29,5 +29,7 @@
   "sortBook200": {
     "minPrice": 150,
     "maxPrice": 200
+  },
+  "sortBook400": {
   }
 }

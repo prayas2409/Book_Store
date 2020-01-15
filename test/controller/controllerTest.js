@@ -109,15 +109,47 @@ describe(`describe Mocha Test for Book store`, () => {
 
 describe(`describe Mocha Test for sorting books`, () => {
 
-    it(`should return true when books sort by its price.`, (done) => {
+    it(`should return 1st book data when books sort by its price.`, (done) => {
         chai.request(app).get('/sortBooks').send(sampleJSON.sortBook200)
             .end((err, res) => {
                 if (err) {
                     err.should.have.status(400)
                 } else {
+                    console.log(res.body)
+                    res.body.data[0].id.should.be.eql("1");
+                    res.body.data[0].author.should.be.eql("Chetan Bhagat'");
+                    res.body.data[0].title.should.be.eql("The Girl in Room 105'");
+                    res.body.data[0].quantity.should.be.eql(12);
+                    res.body.data[0].price.should.be.eql(193);
                     res.should.have.status(200);
                     done()
                 }
+            })
+    });
+
+    it(`should return last when books sort by its price.`, (done) => {
+        chai.request(app).get('/sortBooks').send(sampleJSON.sortBook200)
+            .end((err, res) => {
+                if (err) {
+                    err.should.have.status(400)
+                } else {
+                    let size = res.body.data.length;
+                    res.body.data[size - 1].id.should.be.eql("5");
+                    res.body.data[size - 1].author.should.be.eql("Dan Brown'");
+                    res.body.data[size - 1].title.should.be.eql("Origin'");
+                    res.body.data[size - 1].quantity.should.be.eql(16);
+                    res.body.data[size - 1].price.should.be.eql(174);
+                    res.should.have.status(200);
+                    done()
+                }
+            })
+    });
+
+    it(`should return status code 400 when books limit is not send.`, (done) => {
+        chai.request(app).get('/sortBooks').send(sampleJSON.sortBook400)
+            .end((err, res) => {
+                res.should.have.status(400);
+                done()
             })
     });
 });
