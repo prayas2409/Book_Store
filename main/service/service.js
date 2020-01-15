@@ -1,18 +1,21 @@
 let model = require('../../main/model/model')
 
 class Service {
-    constructor() {
+
+    getAllBooksService(data, callBack) {
+        try {
+            model.read(data, (err, result) => {
+                if (err) {
+                    return callBack(err);
+                } else {
+                    return callBack(null, result);
+                }
+            });
+        } catch (err) {
+            return callBack(err);
+        }
     }
 
-    getAllBooks(data, callBack) {
-        model.read(data, (err, result) => {
-            if (err) {
-                return callBack(err);
-            } else {
-                return callBack(null, result);
-            }
-        })
-    }
 }
 
 module.exports = new Service();

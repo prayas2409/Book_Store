@@ -32,15 +32,21 @@ var bookSchema = new mongoSchema(
 var books = mongoose.model('books', bookSchema);
 
 class Model {
+
     read(field, callBack) {
-        books.find(field, (err, result) => {
-            if (err) {
-                return callBack(err);
-            } else {
-                return callBack(null, result);
-            }
-        })
+        try {
+            books.find(field, (err, result) => {
+                if (err) {
+                    return callBack(err);
+                } else {
+                    return callBack(null, result);
+                }
+            });
+        } catch (err) {
+            return callBack(err);
+        }
     }
+
 }
 
 module.exports = new Model();
