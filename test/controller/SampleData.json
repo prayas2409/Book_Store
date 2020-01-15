@@ -16,5 +16,18 @@
     "quantity": "",
     "price": "",
     "description": ""
+  },
+  "searchBook200": {
+    "field": "chetan"
+  },
+  "searchBook422": {
+    "field": ""
+  },
+  "searchBook400": {
+    "field": "nakka"
+  },
+  "sortBook200": {
+    "minPrice": 150,
+    "maxPrice": 200
   }
 }

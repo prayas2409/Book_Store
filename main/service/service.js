@@ -2,7 +2,7 @@ const model = require('../model/model');
 
 class Service {
 
-    addBookService(req, callback) {
+    addBookService(req, callback, next) {
         try {
             model.create(req, (err, data) => {
                 if (err) {
@@ -12,11 +12,11 @@ class Service {
                 }
             })
         } catch (err) {
-            return callback(err);
+            return next(err);
         }
     }
 
-    getAllBooksService(data, callBack) {
+    getAllBooksService(data, callBack, next) {
         try {
             model.read(data, (err, result) => {
                 if (err) {
@@ -26,7 +26,27 @@ class Service {
                 }
             });
         } catch (err) {
-            return callBack(err);
+            return next(err);
+        }
+    }
+
+    searchBookService(req, callback, next) {
+        try {
+            let searchBook = {
+                $or: [
+                    {'title': {$regex: req.field, $options: 'i'}},
+                    {'author': {$regex: req.field, $options: 'i'}},
+                ]
+            };
+            model.read(searchBook, (err, data) => {
+                if (err) {
+                    return callback(err);
+                } else {
+                    return callback(null, data);
+                }
+            })
+        } catch (err) {
+            return next(err);
         }
     }
 

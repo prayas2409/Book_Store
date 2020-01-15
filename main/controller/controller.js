@@ -2,7 +2,7 @@ let service = require('../service/service');
 
 class Controller {
 
-    addBookController(req, res) {
+    addBookController(req, res, next) {
         let response = {};
         try {
             req.checkBody("id", "Id should not be empty").notEmpty();
@@ -32,7 +32,7 @@ class Controller {
                     if (err) {
                         response.status = false;
                         response.error = err;
-                        return res.status(404).send(response);
+                        return res.status(400).send(response);
                     } else {
                         response.status = true;
                         response.message = data;
@@ -41,13 +41,11 @@ class Controller {
                 });
             }
         } catch (err) {
-            response.status = false;
-            response.error = err;
-            return res.status(500).send(response);
+            next(err);
         }
     }
 
-    getAllBooksController(req, res) {
+    getAllBooksController(req, res, next) {
         let find = {};
         let response = {
             success: false,
@@ -67,13 +65,11 @@ class Controller {
                 }
             })
         } catch (err) {
-            response.success = false;
-            response.error = err;
-            return res(response);
+            next(err);
         }
     }
 
-    sortAllBooksController(req, res) {
+    sortAllBooksController(req, res, next) {
         let response = {
             success: false,
             message: "Error while sorting the books",
@@ -96,12 +92,41 @@ class Controller {
                 }
             })
         } catch (err) {
-            response.success = false;
-            response.error = err;
-            return res(response);
+            next(err);
         }
     }
 
+    searchBookController(req, res, next) {
+        let response = {};
+        try {
+            req.checkBody('field', "Field should not be empty").notEmpty();
+
+            let error = req.validationErrors();
+            if (error) {
+                response.status = false;
+                response.error = error;
+                return res.status(422).send(response)
+            } else {
+                let searchData = {
+                    field: req.body.field
+                };
+                service.searchBookService(searchData, (err, data) => {
+                    if (err) {
+                        response.status = false;
+                        response.error = err;
+                        return res.status(400).send(response);
+                    } else {
+                        response.status = true;
+                        response.message = "Books found!";
+                        response.result = data;
+                        return res.status(200).send(response);
+                    }
+                });
+            }
+        } catch (err) {
+            next(err);
+        }
+    }
 }
 
 module.exports = new Controller();
