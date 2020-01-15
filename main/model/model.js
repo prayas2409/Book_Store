@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 var mongoSchema = mongoose.Schema;
-var bookSchema = new mongoSchema(
+
+const bookSchema = new mongoSchema(
     {
         "id": {
             type: String,
-            require: [true, "id is required"]
+            require: [true, "id is required"],
+            unique: true
         },
         "author": {
             type: String,
@@ -19,19 +21,36 @@ var bookSchema = new mongoSchema(
         },
         "quantity": {
             type: String,
+            require: [true, "quantity is required"]
         },
         "price": {
-            type: String
-        }, "description": {
             type: String,
+            require: [true, "price is required"]
         },
-    },
-    {
+        "description": {
+            type: String
+        }
+    }, {
         timestamps: true
     });
-var books = mongoose.model('books', bookSchema);
+const books = mongoose.model('books', bookSchema);
 
 class Model {
+
+    create(req, callback) {
+        try {
+            let bookAdd = new books(req);
+            bookAdd.save((err, data) => {
+                if (err) {
+                    return callback({message: "Failed to add book!", error: err});
+                } else {
+                    return callback(null, {message: "Book Added Successfully!", result: data});
+                }
+            });
+        } catch (err) {
+            return callback(err);
+        }
+    }
 
     read(field, callBack) {
         try {
@@ -44,10 +63,12 @@ class Model {
             });
         } catch (err) {
             return callBack(err);
+
         }
     }
 
 }
 
 module.exports = new Model();
+
 
