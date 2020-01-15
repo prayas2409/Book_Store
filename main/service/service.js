@@ -30,6 +30,24 @@ class Service {
         }
     }
 
+    sortAllBooksService(data, callBack) {
+        let find = {
+                $and: [{"price": {$gte: data.minPrice}}, {"price": {$lte: data.maxPrice}}]
+            }
+        ;
+        try {
+            model.read(find, (err, result) => {
+                if (err) {
+                    return callBack(err);
+                } else {
+                    return callBack(null, result);
+                }
+            });
+        } catch (err) {
+            return callBack(err);
+        }
+    }
+
 }
 
 module.exports = new Service();

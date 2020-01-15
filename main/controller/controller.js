@@ -73,6 +73,35 @@ class Controller {
         }
     }
 
+    sortAllBooksController(req, res) {
+        let response = {
+            success: false,
+            message: "Error while sorting the books",
+            data: {}
+        };
+        try {
+            let filterData = {
+                minPrice: req.body.minPrice,
+                maxPrice: req.body.maxPrice
+            }
+            service.sortAllBooksService(filterData, (err, result) => {
+                if (err) {
+                    response.message = err;
+                    return res.status(400).send(response);
+                } else {
+                    response.success = true;
+                    response.message = 'All books are sorted';
+                    response.data = result;
+                    return res.status(200).send(response);
+                }
+            })
+        } catch (err) {
+            response.success = false;
+            response.error = err;
+            return res(response);
+        }
+    }
+
 }
 
 module.exports = new Controller();

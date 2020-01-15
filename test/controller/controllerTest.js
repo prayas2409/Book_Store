@@ -13,7 +13,7 @@ describe(`describe Mocha Test for Book store`, () => {
                 if (err) {
                     err.should.have.status(400)
                 } else {
-                    res.body.data.length.should.be.eql(52);
+                    res.body.data.length.should.be.eql(53);
                     res.should.have.status(200);
                     done()
                 }
@@ -36,7 +36,7 @@ describe(`describe Mocha Test for Book store`, () => {
     });
 
     it(`should return last book data when book store database found this book.`, (done) => {
-        chai.request(app).get('/book')
+        chai.request(app).get('/books')
             .end((err, res) => {
                 if (err) {
                     err.should.have.status(404)
@@ -44,6 +44,26 @@ describe(`describe Mocha Test for Book store`, () => {
                     res.body.data[51].id.should.be.eql("52");
                     res.body.data[51].author.should.be.eql("Stephen King'");
                     res.body.data[51].title.should.be.eql("Doctor Sleep'");
+                    res.should.have.status(200);
+                    done()
+                }
+            })
+    });
+
+    it(`should return error when book url is Wrong and Empty.`, (done) => {
+        chai.request(app).get('/book')
+            .end((err, res) => {
+                res.should.have.status(404);
+                done()
+            })
+    });
+
+    it(`should return true when books sort by its price.`, (done) => {
+        chai.request(app).get('/books/sort')
+            .end((err, res) => {
+                if (err) {
+                    err.should.have.status(400)
+                } else {
                     res.should.have.status(200);
                     done()
                 }
@@ -71,6 +91,7 @@ describe(`book list`, () => {
             .post('/addBook')
             .send(sampleJSON.addBook422)
             .end((err, res) => {
+                res.should.have.status(200);
                 if (err) {
                     return done(err);
                 }
