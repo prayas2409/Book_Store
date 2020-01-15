@@ -4,5 +4,6 @@ let controller = require('../controller/controller');
 
 router.post('/addBook', controller.addBookController);
 router.get('/books', controller.getAllBooksController);
+router.get('/searchBook', controller.searchBookController);
 
 module.exports = router;

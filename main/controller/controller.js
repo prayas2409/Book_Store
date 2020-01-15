@@ -73,6 +73,39 @@ class Controller {
         }
     }
 
+    searchBookController(req, res) {
+        let response = {};
+        try {
+            req.checkBody('field', "Field should not be empty").notEmpty();
+
+            let error = req.validationErrors();
+            if (error) {
+                response.status = false;
+                response.error = error;
+                return res.status(422).send(response)
+            } else {
+                let searchData = {
+                    field: req.body.field
+                };
+                service.searchBookService(searchData, (err, data) => {
+                    if (err) {
+                        response.status = false;
+                        response.error = err;
+                        return res.status(404).send(response);
+                    } else {
+                        response.status = true;
+                        response.message = data;
+                        return res.status(200).send(response);
+                    }
+                });
+            }
+        } catch (err) {
+            response.status = false;
+            response.error = err;
+            return res.status(500).send(response);
+        }
+    }
+
 }
 
 module.exports = new Controller();

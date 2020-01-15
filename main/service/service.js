@@ -30,6 +30,26 @@ class Service {
         }
     }
 
+    searchBookService(req, callback) {
+        try {
+            let searchBook = {
+                $or: [
+                    {'title': {$regex: req.field, $options: 'i'}},
+                    {'author': {$regex: req.field, $options: 'i'}},
+                ]
+            };
+            model.read(searchBook, (err, data) => {
+                if (err) {
+                    return callback(err);
+                } else {
+                    return callback(null, data);
+                }
+            })
+        } catch (err) {
+            return callback(err);
+        }
+    }
+
 }
 
 module.exports = new Service();
