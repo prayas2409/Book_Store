@@ -7,18 +7,18 @@ chai.use(chaiHttp);
 
 describe(`book list`, () => {
 
-    // it(`given a books  When  all books details are proper then return 200 status code`, (done) => {
-    //     chai.request(app)
-    //         .post('/addBook')
-    //         .send(sampleJSON.addBook200)
-    //         .end((err, res) => {
-    //             if (err) {
-    //                 return done(err);
-    //             }
-    //             res.should.have.status(200);
-    //             done();
-    //         });
-    // });
+    it(`given a books  When  all books details are proper then return 200 status code`, (done) => {
+        chai.request(app)
+            .post('/addBook')
+            .send(sampleJSON.addBook200)
+            .end((err, res) => {
+                if (err) {
+                    return done(err);
+                }
+                res.should.have.status(200);
+                done();
+            });
+    });
 
     it(`given a books  When  all books details are not proper then return 422 status code`, (done) => {
         chai.request(app)
@@ -56,7 +56,7 @@ describe(`describe Mocha Test for Book store`, () => {
                 if (err) {
                     err.should.have.status(400)
                 } else {
-                    res.body.data.length.should.be.eql(53);
+                    res.body.data.length.should.be.eql(52);
                     res.should.have.status(200);
                     done()
                 }

@@ -58,10 +58,17 @@ class Controller {
                     response.message = err;
                     return res.status(400).send(response);
                 } else {
-                    response.success = true;
-                    response.message = 'All books are covered';
-                    response.data = result;
-                    return res.status(200).send(response);
+                    if (result.length < 0) {
+                        response.success = false;
+                        response.message = "No Books are available.";
+                        response.data = err;
+                        return res.status(422);
+                    } else {
+                        response.success = true;
+                        response.message = 'All books are covered';
+                        response.data = result;
+                        return res.status(200).send(response);
+                    }
                 }
             })
         } catch (err) {
