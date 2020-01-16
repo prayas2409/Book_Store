@@ -62,7 +62,6 @@ class Controller {
                     find,
                     pageNo: parseInt(req.query.pageNo)
                 };
-
                 service.getAllBooksService(getBooks, (err, result) => {
                     if (err) {
                         response.message = err;
