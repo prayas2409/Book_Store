@@ -54,11 +54,15 @@ class Model {
 
     read(field, callBack, next) {
         try {
-            books.find(field, (err, result) => {
+            books.find(field.find, {}, field.query, (err, result) => {
                 if (err) {
                     return callBack(err);
                 } else {
-                    return callBack(null, result);
+                    if (result.length == 0) {
+                        return callBack(null, {message: "Book Not Found", data: result});
+                    } else {
+                        return callBack(null, {message: "Books Found", data: result});
+                    }
                 }
             });
         } catch (err) {

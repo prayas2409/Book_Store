@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const expressValidator = require('express-validator');
 require('./config/db.connection');
-
+require('dotenv').config()
 const bodyParser = require('body-parser');
 const router = require('./main/routes/routes');
 const app = express();
@@ -22,13 +22,12 @@ app.use('/', router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((error, req, res, next) => {
-
     let response = {
         success: false,
         status: 500,
         message: error.message,
-    }
+    };
     res.json(response);
-})
+});
 
 module.exports = app;
