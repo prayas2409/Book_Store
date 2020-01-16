@@ -5,13 +5,11 @@ class Controller {
     addBookController(req, res, next) {
         let response = {};
         try {
-            req.checkBody("id", "Id should not be empty").notEmpty();
+            req.checkBody("id", "Id should not be empty").notEmpty().isInt().isLength({min: 1});
             req.checkBody('author', "Author should not be empty").notEmpty();
             req.checkBody('title', "Title should not be empty").notEmpty();
-            req.checkBody('image', "Image should not be empty").notEmpty();
             req.checkBody('quantity', "Quantity should not be empty").notEmpty();
             req.checkBody('price', "Price should not be empty").notEmpty();
-            req.checkBody('description', "Description should not be empty").notEmpty();
 
             let error = req.validationErrors();
             if (error) {
@@ -53,28 +51,61 @@ class Controller {
             data: {}
         };
         try {
-            console.log('IN CONTROLLER------', req)
-            service.getAllBooksService(find, (err, result) => {
-                if (err) {
-                    console.log("in controller error part")
-                    response.message = err;
-                    return res.status(400).send(response);
-                } else {
-                    if (result.length < 0) {
-                        console.log("in controller if part")
-                        response.success = false;
-                        response.message = "No Books are available.";
-                        response.data = err;
-                        return res.status(422);
+            req.checkQuery("pageNo", "Page Number should not be empty").notEmpty().isNumeric().isLength({min: 1});
+            let error = req.validationErrors();
+            if (error) {
+                response.status = false;
+                response.error = error;
+                return res.status(422).send(response)
+            } else {
+                let getBooks = {
+                    find,
+                    pageNo: parseInt(req.query.pageNo)
+                };
+                service.getAllBooksService(getBooks, (err, result) => {
+                    if (err) {
+                        response.message = err;
+                        return res.status(400).send(response);
                     } else {
-                        console.log("in controller else part")
                         response.success = true;
-                        response.message = 'All books are covered';
                         response.data = result;
                         return res.status(200).send(response);
                     }
-                }
-            })
+                })
+            }
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    searchBookController(req, res, next) {
+        let response = {};
+        try {
+            req.checkBody('field', "Field should not be empty").notEmpty().trim();
+            req.checkQuery("pageNo", "Page Number should not be empty").notEmpty().isLength({min: 1});
+
+            let error = req.validationErrors();
+            if (error) {
+                response.status = false;
+                response.error = error;
+                return res.status(422).send(response)
+            } else {
+                let searchData = {
+                    field: req.body.field,
+                    pageNo: parseInt(req.query.pageNo)
+                };
+                service.searchBookService(searchData, (err, data) => {
+                    if (err) {
+                        response.status = false;
+                        response.error = err;
+                        return res.status(400).send(response);
+                    } else {
+                        response.status = true;
+                        response.result = data;
+                        return res.status(200).send(response);
+                    }
+                });
+            }
         } catch (err) {
             next(err);
         }
@@ -87,30 +118,9 @@ class Controller {
             data: {}
         };
         try {
-            let filterData = {
-                minPrice: req.body.minPrice,
-                maxPrice: req.body.maxPrice
-            }
-            service.sortAllBooksService(filterData, (err, result) => {
-                if (err) {
-                    response.message = err;
-                    return res.status(400).send(response);
-                } else {
-                    response.success = true;
-                    response.message = 'All books are sorted';
-                    response.data = result;
-                    return res.status(200).send(response);
-                }
-            })
-        } catch (err) {
-            next(err);
-        }
-    }
-
-    searchBookController(req, res, next) {
-        let response = {};
-        try {
-            req.checkBody('field', "Field should not be empty").notEmpty();
+            req.checkQuery("pageNo", "Page Number should not be empty").notEmpty().isNumeric().isLength({min: 1});
+            req.checkBody("minPrice", "Minimum Price should not be empty").notEmpty().isNumeric().isLength({min: 1});
+            req.checkBody("maxPrice", "Maximum Price should not be empty").notEmpty().isNumeric().isLength({min: 1});
 
             let error = req.validationErrors();
             if (error) {
@@ -118,18 +128,19 @@ class Controller {
                 response.error = error;
                 return res.status(422).send(response)
             } else {
-                let searchData = {
-                    field: req.body.field
+                let filterByPrice = {
+                    pageNo: parseInt(req.query.pageNo),
+                    minPrice: req.body.minPrice,
+                    maxPrice: req.body.maxPrice
                 };
-                service.searchBookService(searchData, (err, data) => {
+                service.sortAllBooksService(filterByPrice, (err, result) => {
                     if (err) {
-                        response.status = false;
-                        response.error = err;
+                        response.message = err;
                         return res.status(400).send(response);
                     } else {
-                        response.status = true;
-                        response.message = "Books found!";
-                        response.result = data;
+                        response.success = true;
+                        response.message = 'All books are sorted';
+                        response.data = result;
                         return res.status(200).send(response);
                     }
                 });

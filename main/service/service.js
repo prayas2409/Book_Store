@@ -1,4 +1,5 @@
 const model = require('../model/model');
+const pageGenerartor = require('../middleware/middleware');
 
 class Service {
 
@@ -18,7 +19,12 @@ class Service {
 
     getAllBooksService(data, callBack, next) {
         try {
-            model.read(data, (err, result) => {
+            let pagination = pageGenerartor.pagination(data.pageNo);
+            let findQuery = {
+                find: data.find,
+                query: pagination
+            };
+            model.read(findQuery, (err, result) => {
                 if (err) {
                     return callBack(err);
                 } else {
@@ -32,13 +38,18 @@ class Service {
 
     searchBookService(req, callback, next) {
         try {
-            let searchBook = {
+            let pagination = pageGenerartor.pagination(req.pageNo);
+            let find = {
                 $or: [
                     {'title': {$regex: req.field, $options: 'i'}},
                     {'author': {$regex: req.field, $options: 'i'}},
                 ]
             };
-            model.read(searchBook, (err, data) => {
+            let searchQuery = {
+                find,
+                query: pagination
+            };
+            model.read(searchQuery, (err, data) => {
                 if (err) {
                     return callback(err);
                 } else {
@@ -51,12 +62,20 @@ class Service {
     }
 
     sortAllBooksService(data, callBack) {
-        let find = {
-                $and: [{"price": {$gte: data.minPrice}}, {"price": {$lte: data.maxPrice}}]
-            }
-        ;
         try {
-            model.read(find, (err, result) => {
+            let pagination = pageGenerartor.pagination(data.pageNo);
+            let find = {
+                $and: [{
+                    $where: `${data.minPrice} < parseInt(this.price)`
+                }, {
+                    $where: `${data.maxPrice} > parseInt(this.price)`
+                }]
+            };
+            let filterQuery = {
+                find,
+                query: pagination
+            };
+            model.read(filterQuery, (err, result) => {
                 if (err) {
                     return callBack(err);
                 } else {
