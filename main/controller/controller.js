@@ -53,17 +53,21 @@ class Controller {
             data: {}
         };
         try {
+            console.log('IN CONTROLLER------', req)
             service.getAllBooksService(find, (err, result) => {
                 if (err) {
+                    console.log("in controller error part")
                     response.message = err;
                     return res.status(400).send(response);
                 } else {
                     if (result.length < 0) {
+                        console.log("in controller if part")
                         response.success = false;
                         response.message = "No Books are available.";
                         response.data = err;
                         return res.status(422);
                     } else {
+                        console.log("in controller else part")
                         response.success = true;
                         response.message = 'All books are covered';
                         response.data = result;

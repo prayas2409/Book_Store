@@ -10,13 +10,16 @@
     "chai-http": "^4.3.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "expect": "^24.9.0",
     "express": "~4.16.1",
     "express-validator": "^5.3.1",
+    "faker": "^4.1.0",
     "http-errors": "^1.7.3",
     "mocha": "^7.0.0",
     "mongoose": "^5.8.7",
     "morgan": "~1.9.1",
-    "should": "^13.2.3"
+    "should": "^13.2.3",
+    "sinon": "^8.0.4"
   },
   "devDependencies": {
     "morgan": "~1.9.1",
