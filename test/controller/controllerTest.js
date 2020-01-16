@@ -81,7 +81,6 @@ describe(`describe Mocha Test for Book store`, () => {
     it(`should return last book data when book store database found this book.`, (done) => {
         chai.request(app).get('/books')
             .end((err, res) => {
-                // console.log('=====>',res.body)
                 if (err) {
                     err.should.have.status(404)
                 } else {
