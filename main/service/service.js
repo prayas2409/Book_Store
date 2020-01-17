@@ -3,40 +3,36 @@ const pageGenerator = require('../middleware/middleware');
 
 class Service {
 
-    addBookService(req, callback, next) {
+    addBookService(req, next) {
         try {
-            model.create(req, (err, data) => {
-                if (err) {
-                    return callback(err);
-                } else {
-                    return callback(null, data);
-                }
+            return model.create(req).then(data => {
+                return data;
+            }).catch(err => {
+                return err;
             })
         } catch (err) {
             return next(err);
         }
     }
 
-    getAllBooksService(data, callBack, next) {
+    getAllBooksService(data, next) {
         try {
             let pagination = pageGenerator.pagination(data.pageNo);
             let findQuery = {
                 find: data.find,
                 query: pagination
             };
-            model.read(findQuery, (err, result) => {
-                if (err) {
-                    return callBack(err);
-                } else {
-                    return callBack(null, result);
-                }
+            return model.read(findQuery).then(result => {
+                return result;
+            }).catch(err => {
+                return err;
             });
         } catch (err) {
             return next(err);
         }
     }
 
-    searchBookService(req, callback, next) {
+    searchBookService(req, next) {
         try {
             let pagination = pageGenerator.pagination(req.pageNo);
             let find = {
@@ -49,19 +45,17 @@ class Service {
                 find,
                 query: pagination
             };
-            model.read(searchQuery, (err, data) => {
-                if (err) {
-                    return callback(err);
-                } else {
-                    return callback(null, data);
-                }
-            })
+            return model.read(searchQuery).then(result => {
+                return result;
+            }).catch(err => {
+                return err;
+            });
         } catch (err) {
             return next(err);
         }
     }
 
-    sortAllBooksService(data, callBack) {
+    sortAllBooksService(data, next) {
         try {
             let pagination = pageGenerator.pagination(data.pageNo);
             let find = {
@@ -75,15 +69,13 @@ class Service {
                 find,
                 query: pagination
             };
-            model.read(filterQuery, (err, result) => {
-                if (err) {
-                    return callBack(err);
-                } else {
-                    return callBack(null, result);
-                }
+            return model.read(filterQuery).then(result => {
+                return result;
+            }).catch(err => {
+                return err;
             });
         } catch (err) {
-            return callBack(err);
+            return next(err);
         }
     }
 
