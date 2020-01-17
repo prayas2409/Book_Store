@@ -45,33 +45,33 @@ const books = mongoose.model('books', bookSchema);
 
 class Model {
 
-    create(req, callback, next) {
+    create(req, next) {
         try {
-            let bookAdd = new books(req);
-            bookAdd.save((err, data) => {
-                if (err) {
-                    return callback({message: "Failed to add book!", error: err});
-                } else {
-                    return callback(null, {message: "Book Added Successfully!", result: data});
-                }
+            return new Promise((resolve, reject) => {
+                let bookAdd = new books(req);
+                bookAdd.save().then(result => {
+                    resolve({data: result});
+                }).catch(err => {
+                    reject({error: err});
+                })
             });
         } catch (err) {
             return next(err);
         }
     }
 
-    read(field, callBack, next) {
+    read(req, next) {
         try {
-            books.find(field.find, {}, field.query, (err, result) => {
-                if (err) {
-                    return callBack(err);
-                } else {
+            return new Promise((resolve, reject) => {
+                books.find(req.find, {}, req.query).then(result => {
                     if (result.length == 0) {
-                        return callBack(null, {message: "Book Not Found", data: result});
+                        resolve({message: "Book Not Found", data: result});
                     } else {
-                        return callBack(null, {message: "Books Found", data: result});
+                        resolve({message: "Books Found", data: result});
                     }
-                }
+                }).catch(err => {
+                    reject(err);
+                })
             });
         } catch (err) {
             return next(err);

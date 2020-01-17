@@ -13,7 +13,8 @@ class Controller {
 
             let error = req.validationErrors();
             if (error) {
-                response.status = false;
+                response.success = false;
+                response.message = "Validation Error";
                 response.error = error;
                 return res.status(422).send(response)
             } else {
@@ -26,17 +27,17 @@ class Controller {
                     "price": req.body.price,
                     "description": req.body.describe
                 };
-                service.addBookService(filterData, (err, data) => {
-                    if (err) {
-                        response.status = false;
-                        response.error = err;
-                        return res.status(400).send(response);
-                    } else {
-                        response.status = true;
-                        response.message = data;
-                        return res.status(200).send(response);
-                    }
-                });
+                service.addBookService(filterData).then(result => {
+                    response.success = true;
+                    response.message = "Book Added Successfully!";
+                    response.data = result.data;
+                    return res.status(200).send(response);
+                }).catch((err) => {
+                    response.success = false;
+                    response.message = "Failed to add book!";
+                    response.error = err;
+                    return res.status(400).send(response);
+                })
             }
         } catch (err) {
             next(err);
@@ -45,33 +46,31 @@ class Controller {
 
     getAllBooksController(req, res, next) {
         let find = {};
-        let response = {
-            success: false,
-            message: "Error while displaying all books",
-            data: {}
-        };
+        let response = {};
         try {
             req.checkQuery("pageNo", "Page Number should not be empty").notEmpty().isNumeric().isLength({min: 1});
             let error = req.validationErrors();
             if (error) {
-                response.status = false;
-                response.error = error;
+                response.success = false;
+                response.message = "Validation Error";
+                response.data = error;
                 return res.status(422).send(response)
             } else {
                 let getBooks = {
                     find,
                     pageNo: parseInt(req.query.pageNo)
                 };
-                service.getAllBooksService(getBooks, (err, result) => {
-                    if (err) {
-                        response.message = err;
-                        return res.status(400).send(response);
-                    } else {
-                        response.success = true;
-                        response.data = result;
-                        return res.status(200).send(response);
-                    }
-                })
+                service.getAllBooksService(getBooks).then(result => {
+                    response.success = true;
+                    response.message = result.message;
+                    response.data = result.data;
+                    return res.status(200).send(response);
+                }).catch((err) => {
+                    response.success = false;
+                    response.message = "Failed to get book!";
+                    response.error = err;
+                    return res.status(400).send(response);
+                });
             }
         } catch (err) {
             next(err);
@@ -86,7 +85,8 @@ class Controller {
 
             let error = req.validationErrors();
             if (error) {
-                response.status = false;
+                response.success = false;
+                response.message = "Validation Error";
                 response.error = error;
                 return res.status(422).send(response)
             } else {
@@ -94,16 +94,16 @@ class Controller {
                     field: req.body.field,
                     pageNo: parseInt(req.query.pageNo)
                 };
-                service.searchBookService(searchData, (err, data) => {
-                    if (err) {
-                        response.status = false;
-                        response.error = err;
-                        return res.status(400).send(response);
-                    } else {
-                        response.status = true;
-                        response.result = data;
-                        return res.status(200).send(response);
-                    }
+                service.searchBookService(searchData).then(result => {
+                    response.success = true;
+                    response.message = result.message;
+                    response.data = result.data;
+                    return res.status(200).send(response);
+                }).catch((err) => {
+                    response.success = false;
+                    response.message = "Failed to search book!";
+                    response.error = err;
+                    return res.status(400).send(response);
                 });
             }
         } catch (err) {
@@ -112,11 +112,7 @@ class Controller {
     }
 
     sortAllBooksController(req, res, next) {
-        let response = {
-            success: false,
-            message: "Error while sorting the books",
-            data: {}
-        };
+        let response = {};
         try {
             req.checkQuery("pageNo", "Page Number should not be empty").notEmpty().isNumeric().isLength({min: 1});
             req.checkBody("minPrice", "Minimum Price should not be empty").notEmpty().isNumeric().isLength({min: 1});
@@ -124,7 +120,8 @@ class Controller {
 
             let error = req.validationErrors();
             if (error) {
-                response.status = false;
+                response.success = false;
+                response.message = "Validation Error";
                 response.error = error;
                 return res.status(422).send(response)
             } else {
@@ -133,16 +130,16 @@ class Controller {
                     minPrice: req.body.minPrice,
                     maxPrice: req.body.maxPrice
                 };
-                service.sortAllBooksService(filterByPrice, (err, result) => {
-                    if (err) {
-                        response.message = err;
-                        return res.status(400).send(response);
-                    } else {
-                        response.success = true;
-                        response.message = 'All books are sorted';
-                        response.data = result;
-                        return res.status(200).send(response);
-                    }
+                service.sortAllBooksService(filterByPrice).then(result => {
+                    response.success = true;
+                    response.message = 'All books are sorted';
+                    response.data = result;
+                    return res.status(200).send(response);
+                }).catch((err) => {
+                    response.success = false;
+                    response.message = "Failed to sort books!";
+                    response.error = err;
+                    return res.status(400).send(response);
                 });
             }
         } catch (err) {

@@ -7,6 +7,7 @@ require('./config/db.connection');
 require('dotenv').config()
 const bodyParser = require('body-parser');
 const router = require('./main/routes/routes');
+const cors = require('cors')
 const app = express();
 
 app.use(expressValidator());
@@ -17,7 +18,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-
+app.use(cors())
 app.use('/', router);
 app.use(express.static(path.join(__dirname, 'public')));
 
