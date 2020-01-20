@@ -114,8 +114,8 @@ class Controller {
         let response = {};
         try {
             // req.checkQuery("pageNo", "Page Number should not be empty").notEmpty().isNumeric().isLength({min: 1});
-            req.checkBody("minPrice", "Minimum Price should not be empty").notEmpty().isNumeric().isLength({min: 1});
-            req.checkBody("maxPrice", "Maximum Price should not be empty").notEmpty().isNumeric().isLength({min: 1});
+            req.checkQuery("minPrice", "Minimum Price should not be empty").notEmpty().isNumeric().isLength({min: 1});
+            req.checkQuery("maxPrice", "Maximum Price should not be empty").notEmpty().isNumeric().isLength({min: 1});
 
             let error = req.validationErrors();
             if (error) {
@@ -125,9 +125,8 @@ class Controller {
                 return res.status(422).send(response)
             } else {
                 let filterByPrice = {
-                    // pageNo: parseInt(req.query.pageNo),
-                    minPrice: req.body.minPrice,
-                    maxPrice: req.body.maxPrice
+                    minPrice: req.query.minPrice,
+                    maxPrice: req.query.maxPrice
                 };
                 service.sortAllBooksService(filterByPrice).then(result => {
                     response.success = true;

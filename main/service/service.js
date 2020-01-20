@@ -65,11 +65,11 @@ class Service {
                     $where: `${data.maxPrice} > parseInt(this.price)`
                 }]
             };
-            // let filterQuery = {
-            //     find,
-            //     query: pagination
-            // };
-            return model.read(find).then(result => {
+            let filterQuery = {
+                find,
+                // query: pagination
+            };
+            return model.read(filterQuery).then(result => {
                 return result;
             }).catch(err => {
                 return err;
