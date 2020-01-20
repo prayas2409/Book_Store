@@ -63,7 +63,7 @@ class Model {
     read(req, next) {
         try {
             return new Promise((resolve, reject) => {
-                books.find(req.find, {}, req.query).then(result => {
+                books.find(req.find).then(result => {
                     if (result.length == 0) {
                         resolve({message: "Book Not Found", data: result});
                     } else {

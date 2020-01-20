@@ -45,20 +45,21 @@ class Controller {
     }
 
     getAllBooksController(req, res, next) {
+        // console.log("req",req.query.pageNo);
         let find = {};
         let response = {};
         try {
-            req.checkQuery("pageNo", "Page Number should not be empty").notEmpty().isNumeric().isLength({min: 1});
-            let error = req.validationErrors();
-            if (error) {
-                response.success = false;
-                response.message = "Validation Error";
-                response.data = error;
-                return res.status(422).send(response)
-            } else {
+            // req.checkQuery("pageNo", "Page Number should not be empty").notEmpty().isNumeric().isLength({min: 1});
+            // let error = req.validationErrors();
+            // if (error) {
+            //     response.success = false;
+            //     response.message = "Validation Error";
+            //     response.data = error;
+            //     return res.status(422).send(response)
+            // } else {
                 let getBooks = {
                     find,
-                    pageNo: parseInt(req.query.pageNo)
+                    // pageNo: parseInt(req.query.pageNo)
                 };
                 service.getAllBooksService(getBooks).then(result => {
                     response.success = true;
@@ -71,7 +72,7 @@ class Controller {
                     response.error = err;
                     return res.status(400).send(response);
                 });
-            }
+            // }
         } catch (err) {
             next(err);
         }
@@ -80,8 +81,7 @@ class Controller {
     searchBookController(req, res, next) {
         let response = {};
         try {
-            req.checkBody('field', "Field should not be empty").notEmpty().trim();
-            req.checkQuery("pageNo", "Page Number should not be empty").notEmpty().isLength({min: 1});
+            req.checkQuery('field', "Field should not be empty").notEmpty().trim();
 
             let error = req.validationErrors();
             if (error) {
@@ -91,8 +91,7 @@ class Controller {
                 return res.status(422).send(response)
             } else {
                 let searchData = {
-                    field: req.body.field,
-                    pageNo: parseInt(req.query.pageNo)
+                    field: req.query.field
                 };
                 service.searchBookService(searchData).then(result => {
                     response.success = true;
@@ -114,7 +113,7 @@ class Controller {
     sortAllBooksController(req, res, next) {
         let response = {};
         try {
-            req.checkQuery("pageNo", "Page Number should not be empty").notEmpty().isNumeric().isLength({min: 1});
+            // req.checkQuery("pageNo", "Page Number should not be empty").notEmpty().isNumeric().isLength({min: 1});
             req.checkBody("minPrice", "Minimum Price should not be empty").notEmpty().isNumeric().isLength({min: 1});
             req.checkBody("maxPrice", "Maximum Price should not be empty").notEmpty().isNumeric().isLength({min: 1});
 
@@ -126,7 +125,7 @@ class Controller {
                 return res.status(422).send(response)
             } else {
                 let filterByPrice = {
-                    pageNo: parseInt(req.query.pageNo),
+                    // pageNo: parseInt(req.query.pageNo),
                     minPrice: req.body.minPrice,
                     maxPrice: req.body.maxPrice
                 };

@@ -17,10 +17,10 @@ class Service {
 
     getAllBooksService(data, next) {
         try {
-            let pagination = pageGenerator.pagination(data.pageNo);
+            // let pagination = pageGenerator.pagination(data.pageNo);
             let findQuery = {
                 find: data.find,
-                query: pagination
+                // query: pagination
             };
             return model.read(findQuery).then(result => {
                 return result;
@@ -34,7 +34,7 @@ class Service {
 
     searchBookService(req, next) {
         try {
-            let pagination = pageGenerator.pagination(req.pageNo);
+            // let pagination = pageGenerator.pagination(req.pageNo);
             let find = {
                 $or: [
                     {'title': {$regex: req.field, $options: 'i'}},
@@ -43,7 +43,7 @@ class Service {
             };
             let searchQuery = {
                 find,
-                query: pagination
+                // query: pagination
             };
             return model.read(searchQuery).then(result => {
                 return result;
@@ -57,7 +57,7 @@ class Service {
 
     sortAllBooksService(data, next) {
         try {
-            let pagination = pageGenerator.pagination(data.pageNo);
+            // let pagination = pageGenerator.pagination(data.pageNo);
             let find = {
                 $and: [{
                     $where: `${data.minPrice} < parseInt(this.price)`
@@ -65,11 +65,11 @@ class Service {
                     $where: `${data.maxPrice} > parseInt(this.price)`
                 }]
             };
-            let filterQuery = {
-                find,
-                query: pagination
-            };
-            return model.read(filterQuery).then(result => {
+            // let filterQuery = {
+            //     find,
+            //     query: pagination
+            // };
+            return model.read(find).then(result => {
                 return result;
             }).catch(err => {
                 return err;
