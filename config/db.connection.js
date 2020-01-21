@@ -2,7 +2,6 @@ const dbConfig = require('./db.config');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-
 mongoose.connect(dbConfig.url, {
     useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true
 }).then(() => {

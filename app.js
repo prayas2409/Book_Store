@@ -22,6 +22,9 @@ app.use(cors())
 app.use('/', router);
 app.use(express.static(path.join(__dirname, 'public')));
 
+/**
+ * @description :Global Exception
+ */
 app.use((error, req, res, next) => {
     let response = {
         success: false,
