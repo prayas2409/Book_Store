@@ -1,5 +1,5 @@
-const service = require('../main/service/service');
-const model = require('../main/model/model');
+const service = require('../main/service/bookService');
+const model = require('../main/model/bookModel');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 chai.should();

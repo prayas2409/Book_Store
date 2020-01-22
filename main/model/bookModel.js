@@ -43,8 +43,14 @@ const bookSchema = new mongoSchema(
     });
 const books = mongoose.model('books', bookSchema);
 
-class Model {
+class BookModel {
 
+    /**
+     * Purpose : create data base.
+     * @param req
+     * @param next
+     * @returns {*}
+     */
     create(req, next) {
         try {
             return new Promise((resolve, reject) => {
@@ -60,6 +66,12 @@ class Model {
         }
     }
 
+    /**
+     * Purpose : Read all data from database.
+     * @param req
+     * @param next
+     * @returns {*}
+     */
     read(req, next) {
         try {
             return new Promise((resolve, reject) => {
@@ -80,6 +92,6 @@ class Model {
 
 }
 
-module.exports = new Model();
+module.exports = new BookModel();
 
 
