@@ -13,7 +13,7 @@ class BookController {
         let response = {};
         try {
             req.checkBody("id", "Id should not be empty").notEmpty().isInt().isLength({min: 1});
-            req.checkBody('author', "Author should not be empty").notEmpty();
+            req.checkBody('author', "Author should not be empty").notEmpty().trim();
             req.checkBody('title', "Title should not be empty").notEmpty();
             req.checkBody('quantity', "Quantity should not be empty").notEmpty();
             req.checkBody('price', "Price should not be empty").notEmpty();

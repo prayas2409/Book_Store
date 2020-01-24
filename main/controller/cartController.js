@@ -12,8 +12,8 @@ class CartController {
     addCartController(req, res, next) {
         let response = {};
         try {
-            req.checkBody('price', "Price should not be empty").notEmpty();
-            req.checkBody('quantity', "quantity should not be empty").notEmpty();
+            req.checkBody('price', "Price should not be empty").notEmpty().trim();
+            req.checkBody('quantity', "quantity should not be empty").notEmpty().trim();
 
             let error = req.validationErrors();
             if (error) {

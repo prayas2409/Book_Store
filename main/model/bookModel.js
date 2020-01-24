@@ -6,7 +6,6 @@ const bookSchema = new mongoSchema(
         "id": {
             type: String,
             require: [true, "id is required"],
-            unique: true
         },
         "author": {
             type: String,

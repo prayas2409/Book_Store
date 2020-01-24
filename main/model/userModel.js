@@ -6,10 +6,6 @@ const userSchema = new mongoSchema(
         "bookId": {
             type: mongoose.Schema.Types.ObjectId,
             ref: "books"
-
-            // type: Number,
-            // require: [true, "BookId is required"],
-            // unique: true
         },
         "userName": {
             type: String,
@@ -41,7 +37,8 @@ const userSchema = new mongoSchema(
         },
         "type": {
             type: String,
-            require: [true, "type is required"]
+            enum: ['home', 'work', 'other'],
+            default: 'home',
         }
     }, {
         timestamps: true
