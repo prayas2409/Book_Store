@@ -11,13 +11,10 @@ const cartSchema = new mongoSchema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "books"
         },
-        "price": {
+        "orderId": {
             type: Number,
-            require: [true, "price is required"]
-        },
-        "quantity": {
-            type: Number,
-            require: [true, "quantity is required"]
+            default: Math.floor(Math.random() * 100000),
+            index: {unique: true}
         }
     }, {
         timestamps: true

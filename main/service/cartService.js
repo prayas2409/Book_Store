@@ -1,4 +1,6 @@
 const model = require('../model/cartModel');
+const orderModel = require('../model/bookModel');
+const sendMail = require('../middleware/sendMail');
 
 class CartService {
     /**
@@ -10,6 +12,11 @@ class CartService {
     addCartService(data, next) {
         try {
             return model.create(data).then(data => {
+                let myId = {
+                    _id: data.data.bookId
+                }
+                orderModel.update(myId)
+                sendMail.sendEmailFunction(data,'sheetalbedarkar96@gmail.com')
                 return data;
             }).catch(err => {
                 return err;

@@ -17,6 +17,7 @@ class UserController {
             req.checkBody('pinCode', "pinCode should not be empty").notEmpty();
             req.checkBody('locality', "locality should not be empty").notEmpty();
             req.checkBody('address', "address should not be empty").notEmpty();
+            req.checkBody('email', "email should not be empty").notEmpty();
             req.checkBody('cityTown', "cityTown should not be empty").notEmpty();
             req.checkBody('landmark', "landmark should not be empty").notEmpty();
             req.checkBody('type', "type should not be empty").notEmpty();
@@ -35,6 +36,7 @@ class UserController {
                     "pinCode": req.body.pinCode,
                     "locality": req.body.locality,
                     "address": req.body.address,
+                    "email": req.body.email,
                     "cityTown": req.body.cityTown,
                     "landmark": req.body.landmark,
                     "type": req.body.type

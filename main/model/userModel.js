@@ -27,6 +27,10 @@ const userSchema = new mongoSchema(
             type: String,
             require: [true, "address is required"]
         },
+        "email": {
+            type: String,
+            require: [true, "email is required"]
+        },
         "cityTown": {
             type: String,
             require: [true, "cityTown is required"]

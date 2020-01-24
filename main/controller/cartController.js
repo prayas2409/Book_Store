@@ -12,9 +12,6 @@ class CartController {
     addCartController(req, res, next) {
         let response = {};
         try {
-            req.checkBody('price', "Price should not be empty").notEmpty().trim();
-            req.checkBody('quantity', "quantity should not be empty").notEmpty().trim();
-
             let error = req.validationErrors();
             if (error) {
                 response.success = false;
@@ -24,18 +21,16 @@ class CartController {
             } else {
                 let filterData = {
                     "userId": req.body.userId,
-                    "bookId": req.body.bookId,
-                    "price": req.body.price,
-                    "quantity": req.body.quantity,
+                    "bookId": req.body.bookId
                 };
                 service.addCartService(filterData).then(result => {
                     response.success = true;
-                    response.message = "Cart Added Successfully!";
+                    response.message = "oder placed Successfully!";
                     response.data = result.data;
                     return res.status(200).send(response);
                 }).catch((err) => {
                     response.success = false;
-                    response.message = "Failed to add Cart!";
+                    response.message = "Failed to placed oder!";
                     response.error = err;
                     return res.status(400).send(response);
                 })

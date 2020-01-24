@@ -89,6 +89,19 @@ class BookModel {
         }
     }
 
+    update(req, next) {
+        try {
+            return new Promise((resolve, reject) => {
+                    books.update(req, {$inc: {'quantity': - 1}}).then(result => {
+                        resolve({data: result});
+                    }).catch(err => {
+                        reject({error: err});
+                    })
+            });
+        } catch (err) {
+            return next(err);
+        }
+    }
 }
 
 module.exports = new BookModel();

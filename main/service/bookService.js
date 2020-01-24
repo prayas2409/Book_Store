@@ -51,7 +51,6 @@ class BookService {
      */
     searchBookService(req, next) {
         try {
-            // let pagination = pageGenerator.pagination(req.pageNo);
             let find = {
                 $or: [
                     {'title': {$regex: req.field, $options: 'i'}},
@@ -80,7 +79,6 @@ class BookService {
      */
     sortAllBooksService(data, next) {
         try {
-            // let pagination = pageGenerator.pagination(data.pageNo);
             let find = {
                 $and: [{
                     $where: `${data.minPrice} < parseInt(this.price)`
@@ -90,7 +88,6 @@ class BookService {
             };
             let filterQuery = {
                 find,
-                // query: pagination
             };
             return model.read(filterQuery).then(result => {
                 return result;
