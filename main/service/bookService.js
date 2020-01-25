@@ -1,7 +1,13 @@
-const model = require('../model/model');
+const model = require('../model/bookModel');
 
-class Service {
+class BookService {
 
+    /**
+     * Purpose : add book
+     * @param req
+     * @param next
+     * @returns {Promise<unknown>|*}
+     */
     addBookService(req, next) {
         try {
             return model.create(req).then(data => {
@@ -14,6 +20,12 @@ class Service {
         }
     }
 
+    /**
+     * Purpose : get all data from database
+     * @param data
+     * @param next
+     * @returns {Promise<unknown>|*}
+     */
     getAllBooksService(data, next) {
         try {
             let findQuery = {
@@ -29,6 +41,12 @@ class Service {
         }
     }
 
+    /**
+     * Purpose : search book from db
+     * @param req
+     * @param next
+     * @returns {Promise<unknown>|*}
+     */
     searchBookService(req, next) {
         try {
             let find = {
@@ -50,6 +68,12 @@ class Service {
         }
     }
 
+    /**
+     * Purpose : sort books with it's price
+     * @param data
+     * @param next
+     * @returns {Promise<>|*}
+     */
     sortAllBooksService(data, next) {
         try {
             let find = {
@@ -71,7 +95,6 @@ class Service {
             return next(err);
         }
     }
-
 }
 
-module.exports = new Service();
+module.exports = new BookService();

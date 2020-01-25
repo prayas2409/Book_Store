@@ -6,7 +6,6 @@ const bookSchema = new mongoSchema(
         "id": {
             type: String,
             require: [true, "id is required"],
-            unique: true
         },
         "author": {
             type: String,
@@ -43,8 +42,14 @@ const bookSchema = new mongoSchema(
     });
 const books = mongoose.model('books', bookSchema);
 
-class Model {
+class BookModel {
 
+    /**
+     * Purpose : create data base.
+     * @param req
+     * @param next
+     * @returns {*}
+     */
     create(req, next) {
         try {
             return new Promise((resolve, reject) => {
@@ -60,6 +65,12 @@ class Model {
         }
     }
 
+    /**
+     * Purpose : Read all data from database.
+     * @param req
+     * @param next
+     * @returns {*}
+     */
     read(req, next) {
         try {
             return new Promise((resolve, reject) => {
@@ -78,8 +89,27 @@ class Model {
         }
     }
 
+    /**
+     * purpose : Update data into database
+     * @param req
+     * @param next
+     * @returns {*}
+     */
+    update(req, next) {
+        try {
+            return new Promise((resolve, reject) => {
+                books.update(req, {$inc: {'quantity': -1}}).then(result => {
+                    resolve({data: result});
+                }).catch(err => {
+                    reject({error: err});
+                })
+            });
+        } catch (err) {
+            return next(err);
+        }
+    }
 }
 
-module.exports = new Model();
+module.exports = new BookModel();
 
 
