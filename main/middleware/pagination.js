@@ -1,4 +1,4 @@
-class Middleware {
+class Pagination {
     pagination(pageNo) {
         const query = {};
         let response = {};
@@ -15,4 +15,4 @@ class Middleware {
     }
 }
 
-module.exports = new Middleware();
+module.exports = new Pagination();

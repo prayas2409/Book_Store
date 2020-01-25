@@ -9,6 +9,6 @@ router.get('/books', bookController.getAllBooksController);
 router.get('/sortBooks', bookController.sortAllBooksController);
 router.get('/searchBook', bookController.searchBookController);
 router.post('/addUser', userController.addUserController);
-router.post('/cart', orderController.addOrderController);
+router.post('/orderBook', orderController.addOrderController);
 
 module.exports = router;

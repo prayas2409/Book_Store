@@ -5,21 +5,23 @@ const cartSchema = new mongoSchema(
     {
         "userId": {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "userDetails"
+            ref: "userDetails",
+            require: true
         },
         "bookId": {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "books"
+            ref: "books",
+            require: true
         },
         "orderId": {
             type: Number,
-            default: Math.floor(Math.random() * 100000),
-            index: {unique: true}
+            require: true,
+            unique: true
         }
     }, {
         timestamps: true
     });
-const cartDetails = mongoose.model('cartDetails', cartSchema);
+const cartDetails = mongoose.model('bookDetails', cartSchema);
 
 class CartModel {
     /**

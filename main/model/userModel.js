@@ -3,10 +3,6 @@ const mongoSchema = mongoose.Schema;
 
 const userSchema = new mongoSchema(
     {
-        "bookId": {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "books"
-        },
         "userName": {
             type: String,
             require: [true, "name is required"],
@@ -39,11 +35,11 @@ const userSchema = new mongoSchema(
             type: String,
             require: [true, "landmark is required"]
         },
-        "type": {
-            type: String,
-            enum: ['home', 'work', 'other'],
-            default: 'home',
-        }
+        // "type": {
+        //     type: String,
+        //     enum: ['home', 'work', 'other'],
+        //     default: 'home',
+        // }
     }, {
         timestamps: true
     });

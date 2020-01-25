@@ -1,4 +1,5 @@
-let service = require('../service/orderService');
+let orderService = require('../service/orderService');
+const sendMail = require('../middleware/sendMail');
 
 class CartController {
 
@@ -23,16 +24,21 @@ class CartController {
                     "userId": req.body.userId,
                     "bookId": req.body.bookId
                 };
-                service.addOrderService(filterData).then(result => {
+                orderService.addOrderService(filterData).then(result => {
                     response.success = true;
                     response.message = "oder placed Successfully!";
-                    response.data = result.data;
+                    response.data = result.data
+                    let myId = {
+                        _id: result.data.bookId
+                    };
+                    orderService.quantityUpdate(myId);
+                    sendMail.sendEmailFunction(result, 'gaikwadravi991@gmail.com');
                     return res.status(200).send(response);
                 }).catch((err) => {
                     response.success = false;
                     response.message = "Failed to placed oder!";
                     response.error = err;
-                    return res.status(400).send(response);
+                    return res.status(404).send(response);
                 })
             }
         } catch (err) {

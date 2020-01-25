@@ -43,7 +43,7 @@ class BookController {
                     response.success = false;
                     response.message = "Failed to add book!";
                     response.error = err;
-                    return res.status(400).send(response);
+                    return res.status(404).send(response);
                 })
             }
         } catch (err) {
@@ -73,7 +73,7 @@ class BookController {
                 response.success = false;
                 response.message = "Failed to get book!";
                 response.error = err;
-                return res.status(400).send(response);
+                return res.status(404).send(response);
             });
         } catch (err) {
             next(err);
@@ -110,7 +110,7 @@ class BookController {
                     response.success = false;
                     response.message = "Failed to search book!";
                     response.error = err;
-                    return res.status(400).send(response);
+                    return res.status(404).send(response);
                 });
             }
         } catch (err) {
@@ -151,7 +151,7 @@ class BookController {
                     response.success = false;
                     response.message = "Failed to sort books!";
                     response.error = err;
-                    return res.status(400).send(response);
+                    return res.status(404).send(response);
                 });
             }
         } catch (err) {

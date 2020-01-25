@@ -1,6 +1,6 @@
-const model = require('../model/orderModel');
-const orderModel = require('../model/bookModel');
-const sendMail = require('../middleware/sendMail');
+const orderModel = require('../model/orderModel');
+const bookModel = require('../model/bookModel');
+// const sendMail = require('../middleware/sendMail');
 
 class CartService {
     /**
@@ -11,12 +11,13 @@ class CartService {
      */
     addOrderService(data, next) {
         try {
-            return model.create(data).then(data => {
-                let myId = {
-                    _id: data.data.bookId
-                };
-                orderModel.update(myId);
-                sendMail.sendEmailFunction(data, 'sheetalbedarkar96@gmail.com');
+            let orderId = Math.floor(Math.random() * 100000);
+            let filterData={
+                userId :data.userId,
+                bookId :data.bookId,
+                orderId:orderId
+            };
+            return orderModel.create(filterData).then(data => {;
                 return data;
             }).catch(err => {
                 return err;
@@ -25,6 +26,19 @@ class CartService {
             return next(err);
         }
     }
+
+    quantityUpdate(data, next){
+        try{
+        bookModel.update(data).then(response =>{
+            return response;
+        }).catch(err =>{
+            return err;
+        })
+        }catch (err) {
+            return next(err);
+        }
+    }
+
 }
 
 module.exports = new CartService();

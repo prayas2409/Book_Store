@@ -12,23 +12,23 @@ class UserController {
     addUserController(req, res, next) {
         let responses = {};
         try {
-            req.checkBody('userName', "Invalid userName")
+            req.checkBody('username', "Invalid userName")
                 .isAlpha().notEmpty().isLength({min: 3});
-            req.checkBody('phoneNumber', "Invalid mobile number ")
+            req.checkBody('mobile', "Invalid mobile number ")
                 .notEmpty().isLength({min: 10, max: 10}).isNumeric();
-            req.checkBody('pinCode', " Invalid pinCode ")
+            req.checkBody('pincode', " Invalid pinCode ")
                 .notEmpty().isLength({min: 6, max: 6}).isNumeric();
             req.checkBody('locality', "Invalid locality")
                 .isAlpha().notEmpty().isLength({min: 3});
             req.checkBody('address', "Invalid address")
                 .isAlphanumeric().notEmpty().isLength({min: 5});
-            req.checkBody('email', "Invalid email")
+            req.checkBody('emailId', "Invalid email")
                 .notEmpty().isEmail();
-            req.checkBody('cityTown', "Invalid cityTown")
+            req.checkBody('city', "Invalid cityTown")
                 .isAlpha().notEmpty().isLength({min: 3});
             req.checkBody('landmark', "Invalid landmark")
                 .isAlphanumeric().notEmpty().isLength({min: 3});
-            req.checkBody('type', "Invalid type").notEmpty();
+            // req.checkBody('type', "Invalid type").notEmpty();
 
             let error = req.validationErrors();
             if (error) {
@@ -38,20 +38,17 @@ class UserController {
                 return res.status(422).send(responses)
             } else {
                 let filterData = {
-                    "bookId": req.body.bookId,
-                    "userName": req.body.userName,
-                    "phoneNumber": req.body.phoneNumber,
-                    "pinCode": req.body.pinCode,
+                    "userName": req.body.username,
+                    "phoneNumber": req.body.mobile,
+                    "pinCode": req.body.pincode,
                     "locality": req.body.locality,
                     "address": req.body.address,
-                    "email": req.body.email,
-                    "cityTown": req.body.cityTown,
+                    "email": req.body.emailId,
+                    "cityTown": req.body.city,
                     "landmark": req.body.landmark,
-                    "type": req.body.type
+                    // "type": req.body.type
                 };
                 service.addUserService(filterData).then(result => {
-                    console.log("req",result)
-
                     responses.success = true;
                     responses.message = "User Added Successfully!";
                     responses.data = result.data;
@@ -60,7 +57,7 @@ class UserController {
                     responses.success = false;
                     responses.message = "Failed to add User!";
                     responses.error = err;
-                    return res.status(400).send(responses);
+                    return res.status(404).send(responses);
                 })
             }
         } catch (err) {
