@@ -1,10 +1,10 @@
-const model = require('../model/cartModel');
+const model = require('../model/orderModel');
 const orderModel = require('../model/bookModel');
 const sendMail = require('../middleware/sendMail');
 
 class CartService {
     /**
-     * purpose : crate document in cart database
+     * purpose : crate document in cart database to order success, send email to user and 1 quantity reduce from data of this particular data base.
      * @param data
      * @param next
      * @returns {*}
@@ -16,7 +16,7 @@ class CartService {
                     _id: data.data.bookId
                 }
                 orderModel.update(myId)
-                sendMail.sendEmailFunction(data,'sheetalbedarkar96@gmail.com')
+                sendMail.sendEmailFunction(data, 'sheetalbedarkar96@gmail.com')
                 return data;
             }).catch(err => {
                 return err;

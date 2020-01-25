@@ -20,7 +20,7 @@ exports.sendEmailFunction = (data, email) => {
      * @description : setup e-mail data with unicode symbols
      */
     const mailOptions = {
-        from: 'gaikwadr576@gmail.com',
+        from: 'abcd@gmail.com',
         to: email,
         subject: 'Purchase Order Acceptance Letter',
         text: 'Tall Tales Book Shop\n' +
