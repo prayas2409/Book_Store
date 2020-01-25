@@ -46,23 +46,15 @@ class Controller {
 
 
     getAllBooksController(req, res, next) {
-        // console.log("req",req.query.pageNo);
         let find = {};
         let response = {};
         try {
-            // req.checkQuery("pageNo", "Page Number should not be empty").notEmpty().isNumeric().isLength({min: 1});
-            // let error = req.validationErrors();
-            // if (error) {
-            //     response.success = false;
-            //     response.message = "Validation Error";
-            //     response.data = error;
-            //     return res.status(422).send(response)
-            // } else {
                 let getBooks = {
-                    find,
-                    // pageNo: parseInt(req.query.pageNo)
+                    find
                 };
                 service.getAllBooksService(getBooks).then(result => {
+                    console.log("req",result);
+
                     response.success = true;
                     response.message = result.message;
                     response.data = result.data;
@@ -73,7 +65,6 @@ class Controller {
                     response.error = err;
                     return res.status(400).send(response);
                 });
-            // }
         } catch (err) {
             next(err);
         }

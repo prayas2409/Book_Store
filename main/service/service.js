@@ -1,5 +1,4 @@
 const model = require('../model/model');
-const pageGenerator = require('../middleware/middleware');
 
 class Service {
 
@@ -17,10 +16,8 @@ class Service {
 
     getAllBooksService(data, next) {
         try {
-            // let pagination = pageGenerator.pagination(data.pageNo);
             let findQuery = {
-                find: data.find,
-                // query: pagination
+                find: data.find
             };
             return model.read(findQuery).then(result => {
                 return result;
@@ -34,7 +31,6 @@ class Service {
 
     searchBookService(req, next) {
         try {
-            // let pagination = pageGenerator.pagination(req.pageNo);
             let find = {
                 $or: [
                     {'title': {$regex: req.field, $options: 'i'}},
@@ -42,8 +38,7 @@ class Service {
                 ]
             };
             let searchQuery = {
-                find,
-                // query: pagination
+                find
             };
             return model.read(searchQuery).then(result => {
                 return result;
@@ -57,7 +52,6 @@ class Service {
 
     sortAllBooksService(data, next) {
         try {
-            // let pagination = pageGenerator.pagination(data.pageNo);
             let find = {
                 $and: [{
                     $where: `${data.minPrice} < parseInt(this.price)`
@@ -66,8 +60,7 @@ class Service {
                 }]
             };
             let filterQuery = {
-                find,
-                // query: pagination
+                find
             };
             return model.read(filterQuery).then(result => {
                 return result;
