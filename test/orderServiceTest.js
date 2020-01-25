@@ -1,4 +1,4 @@
-const service = require('../main/service/cartService');
+const service = require('../main/service/orderService');
 const model = require('../main/model/orderModel');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -9,7 +9,7 @@ const sinon = require('sinon');
 let sandbox;
 let getAllBooksModel;
 
-describe("add cart in database", () => {
+describe("Add successful order in database", () => {
     before(() => {
         sandbox = sinon.createSandbox();
         getAllBooksModel = sandbox.stub(model, "create");
@@ -18,33 +18,30 @@ describe("add cart in database", () => {
         model.create.restore();
     });
 
-    it("should add cart in dataBase", (done) => {
-        let actualData = {
-            data: {}
-        };
-        let expectedData = {
+    it("Given a userId and bookId When both id's are correct then order conform and send mail to customer", (done) => {
+        let request = {
             "userId": "101",
-            "book_Id": "102",
-            "price": "150",
-            "quantity": "1",
+            "book_Id": "102"
         };
-        getAllBooksModel.returns(Promise.resolve(expectedData));
-        service.addCartService(actualData).then(data => chai.expect(data).to.be.eql(expectedData));
+        let response = {
+            "orderId": "99976",
+            "userId": "5e2c0eb87a7bdf43b908bf81",
+            "bookId": "5e1ff27d9d6d3b1318e58143",
+        };
+        getAllBooksModel.returns(Promise.resolve(response));
+        service.addOrderService(request).then(data => chai.expect(data).to.be.eql(response));
         done();
     });
 
-    it("should false when cart is't add in dataBase", (done) => {
-        let actualData = {
+    it("Given a userId and bookId When both id's are inCorrect then return error message", (done) => {
+        let request = {
             data: {}
         };
-        let expectedData = {
-            "userId": "101",
-            "book_Id": "102",
-            "price": "150",
-            "quantity": "1",
+        let response = {
+           message:"Incorrect userId or bookId"
         };
-        getAllBooksModel.returns(Promise.reject(expectedData));
-        service.addCartService(actualData).then(data => chai.expect(data).to.be.eql(expectedData));
+        getAllBooksModel.returns(Promise.reject(response));
+        service.addOrderService(request).then(data => chai.expect(data).to.be.eql(response));
         done();
     });
 });

@@ -9,14 +9,14 @@ class CartService {
      * @param next
      * @returns {*}
      */
-    addCartService(data, next) {
+    addOrderService(data, next) {
         try {
             return model.create(data).then(data => {
                 let myId = {
                     _id: data.data.bookId
-                }
-                orderModel.update(myId)
-                sendMail.sendEmailFunction(data, 'sheetalbedarkar96@gmail.com')
+                };
+                orderModel.update(myId);
+                sendMail.sendEmailFunction(data, 'sheetalbedarkar96@gmail.com');
                 return data;
             }).catch(err => {
                 return err;

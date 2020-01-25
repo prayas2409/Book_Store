@@ -50,6 +50,8 @@ class UserController {
                     "type": req.body.type
                 };
                 service.addUserService(filterData).then(result => {
+                    console.log("req",result)
+
                     responses.success = true;
                     responses.message = "User Added Successfully!";
                     responses.data = result.data;

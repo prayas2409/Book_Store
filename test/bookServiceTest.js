@@ -9,7 +9,7 @@ const sinon = require('sinon');
 let sandbox;
 let getAllBooksModel;
 
-describe("add book in database", () => {
+describe("Add book in database", () => {
     before(() => {
         sandbox = sinon.createSandbox();
         getAllBooksModel = sandbox.stub(model, "create");
@@ -18,11 +18,8 @@ describe("add book in database", () => {
         model.create.restore();
     });
 
-    it("should add one book in dataBase", (done) => {
-        let actualData = {
-            data: {}
-        };
-        let expectedData = {
+    it("Given a book details When all book details are proper then Add Books into database", (done) => {
+        let request = {
             "id": "01",
             "author": "chetan bhagat",
             "title": "aaaa",
@@ -31,16 +28,7 @@ describe("add book in database", () => {
             "price": "123",
             "description": "uysdfgyu aogfuhuhu"
         };
-        getAllBooksModel.returns(Promise.resolve(expectedData));
-        service.addBookService(actualData).then(data => chai.expect(data).to.be.eql(expectedData));
-        done();
-    });
-
-    it("should false when book is't add in dataBase", (done) => {
-        let actualData = {
-            data: {}
-        };
-        let expectedData = {
+        let response = {
             "id": "01",
             "author": "chetan bhagat",
             "title": "aaaa",
@@ -49,87 +37,61 @@ describe("add book in database", () => {
             "price": "123",
             "description": "uysdfgyu aogfuhuhu"
         };
-        getAllBooksModel.returns(Promise.reject(expectedData));
-        service.addBookService(actualData).then(data => chai.expect(data).to.be.eql(expectedData));
+        getAllBooksModel.returns(Promise.resolve(response));
+        service.addBookService(request).then(data => chai.expect(data).to.be.eql(response));
+        done();
+    });
+
+    it("given book details when book details is empty then it should return error message", (done) => {
+        let request = {};
+        let response = {
+            message: "Request is empty"
+        };
+        getAllBooksModel.returns(Promise.reject(response.message));
+        service.addBookService(request).then(data => chai.expect(data).to.be.eql(response.message));
         done();
     });
 });
 
 
-describe("get all books from database", () => {
-    before(function () {
+describe("Get all books from database", () => {
+    before(() => {
         sandbox = sinon.createSandbox();
         getAllBooksModel = sandbox.stub(model, "read");
     });
-    after(function () {
+    after(() => {
         model.read.restore();
     });
 
-    it("should return all books", (done) => {
-        let actualData = {};
-        let expectedData = {
+    it("given database when hit getAllBooks api then should return all books", (done) => {
+        let request = {};
+        let response = [{
             "id": "101",
-            "title": "Node js"
-        };
-        getAllBooksModel.returns(Promise.resolve(expectedData));
-        service.getAllBooksService(actualData).then(data => chai.expect(data).to.be.eql(expectedData));
-        done();
-    });
-
-    it("should return false when page no is '0' books", (done) => {
-        let actualData = {
-            find: {},
-            pageNo: 0
-        };
-        let expectedData = {
-            "id": "101",
-            "title": "Node js"
-        };
-        getAllBooksModel.returns(Promise.reject(expectedData));
-        service.getAllBooksService(actualData).then(data => chai.expect(data).to.be.eql(expectedData));
-        done();
-    });
-
-});
-
-describe("get search books from database", () => {
-    before(function () {
-        sandbox = sinon.createSandbox();
-        getAllBooksModel = sandbox.stub(model, "read");
-    });
-    after(function () {
-        model.read.restore();
-    });
-
-    it("should return search books", (done) => {
-        let actualData = {
-            field: "Node",
-            pageNo: 1
-        };
-        let expectedData = [{
-            "id": "101",
-            "title": "Node js"
+            "author": "chetan bhagat",
+            "title": "Half GirlFriend",
+            "image": "myImage.png",
+            "quantity": "12",
+            "price": "123",
+            "description": "love story"
         }];
-        getAllBooksModel.returns(Promise.resolve(expectedData));
-        service.searchBookService(actualData).then(data => chai.expect(data).to.be.eql(expectedData));
+        getAllBooksModel.returns(Promise.resolve(response));
+        service.getAllBooksService(request).then(data => chai.expect(data).to.be.eql(response));
         done();
     });
 
-    it("should return false when can't search book", () => {
-        let actualData = {
-            field: "Node",
-            pageNo: 1
+    it("given database when data not found then should return Error message", (done) => {
+        let request = {};
+        let response = {
+            message: "Book not Found"
         };
-        let expectedData = [{
-            "id": "101",
-            "title": "Node js"
-        }];
-        getAllBooksModel.returns(Promise.reject(expectedData));
-        service.searchBookService(actualData).then(data => chai.expect(data).to.be.eql(expectedData));
+        getAllBooksModel.returns(Promise.reject(response.message));
+        service.getAllBooksService(request).then(data => chai.expect(data).to.be.eql(response.message));
+        done();
     });
+
 });
 
-describe("get sort books from database", () => {
+describe(" Search books from database", () => {
     before(function () {
         sandbox = sinon.createSandbox();
         getAllBooksModel = sandbox.stub(model, "read");
@@ -138,39 +100,91 @@ describe("get sort books from database", () => {
         model.read.restore();
     });
 
-    it("should return sort books", (done) => {
-        let actualData = {
+    it("given database when search by title or author name then should return exact book", (done) => {
+        let request = {
+            field: "chetan"
+        };
+        let response = [{
+            "id": "101",
+            "author": "chetan bhagat",
+            "title": "Half GirlFriend",
+            "image": "myImage.png",
+            "quantity": "12",
+            "price": "123",
+            "description": "love story"
+        }];
+        getAllBooksModel.returns(Promise.resolve(response));
+        service.searchBookService(request).then(data => chai.expect(data).to.be.eql(response));
+        done();
+    });
+
+    it("given database when search by title or author name but book not found then should return error message", () => {
+        let request = {
+            field: "Node"
+        };
+        let response = {
+            message: "Book not Found"
+        };
+        getAllBooksModel.returns(Promise.reject(response.message));
+        service.searchBookService(request).then(data => chai.expect(data).to.be.eql(response.message));
+    });
+});
+
+describe("sort books by price from database", () => {
+    before( () => {
+        sandbox = sinon.createSandbox();
+        getAllBooksModel = sandbox.stub(model, "read");
+    });
+    after( () => {
+        model.read.restore();
+    });
+
+    it("given database when sort by minPrice and maxPrice then should return exacts books in that price range", (done) => {
+        let request = {
             "minPrice": 150,
-            "maxPrice": 200,
-            pageNo: 1
+            "maxPrice": 200
         };
-        let expectedData = [{
+        let response = [{
             "id": "101",
-            "title": "Node js",
-            "price": 170
+            "author": "chetan bhagat",
+            "title": "Half GirlFriend",
+            "image": "myImage.png",
+            "quantity": "12",
+            "price": "160",
+            "description": "love story"
         }, {
-            "id": "102",
-            "title": "java s",
-            "price": 190
+            "id": "101",
+            "author": "Dan brown",
+            "title": "Indian super foods",
+            "image": "myImage.png",
+            "quantity": "12",
+            "price": "190",
+            "description": "Food Recipe"
 
         }];
-        getAllBooksModel.returns(Promise.resolve(expectedData));
-        service.sortAllBooksService(actualData).then(data => chai.expect(data).to.be.eql(expectedData));
+        getAllBooksModel.returns(Promise.resolve(response));
+        service.sortAllBooksService(request).then(data => chai.expect(data).to.be.eql(response));
         done();
     });
 
-    it("should return false sort books", () => {
-        let actualData = {};
-        let expectedData = [{
-            "id": "101",
-            "title": "Node js",
-            "price": 170
-        }, {
-            "id": "102",
-            "title": "java s",
-            "price": 190
-        }];
-        getAllBooksModel.returns(Promise.reject(expectedData));
-        service.sortAllBooksService(actualData).then(data => chai.expect(data).to.be.eql(expectedData));
+    it("given database when sort by minPrice and maxPrice but book not found then should return error message", () => {
+        let request = {
+            "minPrice": 10,
+            "maxPrice": 50
+        };
+        let response = {
+           message: "Books not found"
+        };
+        getAllBooksModel.returns(Promise.reject(response.message));
+        service.sortAllBooksService(request).then(data => chai.expect(data).to.be.eql(response.message));
+    });
+
+    it("given database when request is empty then should return error message", () => {
+        let request = { };
+        let response = {
+            message: "Invalid Input range "
+        };
+        getAllBooksModel.returns(Promise.reject(response.message));
+        service.sortAllBooksService(request).then(data => chai.expect(data).to.be.eql(response.message));
     });
 });

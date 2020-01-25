@@ -9,7 +9,7 @@ class CartController {
      * @param next
      * @returns {*}
      */
-    addCartController(req, res, next) {
+    addOrderController(req, res, next) {
         let response = {};
         try {
             let error = req.validationErrors();
@@ -23,7 +23,7 @@ class CartController {
                     "userId": req.body.userId,
                     "bookId": req.body.bookId
                 };
-                service.addCartService(filterData).then(result => {
+                service.addOrderService(filterData).then(result => {
                     response.success = true;
                     response.message = "oder placed Successfully!";
                     response.data = result.data;
