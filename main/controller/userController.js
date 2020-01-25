@@ -12,15 +12,23 @@ class UserController {
     addUserController(req, res, next) {
         let responses = {};
         try {
-            req.checkBody('userName', "userName should not be empty").notEmpty();
-            req.checkBody('phoneNumber', "mobile number should not be empty").notEmpty();
-            req.checkBody('pinCode', "pinCode should not be empty").notEmpty();
-            req.checkBody('locality', "locality should not be empty").notEmpty();
-            req.checkBody('address', "address should not be empty").notEmpty();
-            req.checkBody('email', "email should not be empty").notEmpty();
-            req.checkBody('cityTown', "cityTown should not be empty").notEmpty();
-            req.checkBody('landmark', "landmark should not be empty").notEmpty();
-            req.checkBody('type', "type should not be empty").notEmpty();
+            req.checkBody('userName', "Invalid userName")
+                .isAlpha().notEmpty().isLength({min: 3});
+            req.checkBody('phoneNumber', "Invalid mobile number ")
+                .notEmpty().isLength({min: 10, max: 10}).isNumeric();
+            req.checkBody('pinCode', " Invalid pinCode ")
+                .notEmpty().isLength({min: 6, max: 6}).isNumeric();
+            req.checkBody('locality', "Invalid locality")
+                .isAlpha().notEmpty().isLength({min: 3});
+            req.checkBody('address', "Invalid address")
+                .isAlphanumeric().notEmpty().isLength({min: 5});
+            req.checkBody('email', "Invalid email")
+                .notEmpty().isEmail();
+            req.checkBody('cityTown', "Invalid cityTown")
+                .isAlpha().notEmpty().isLength({min: 3});
+            req.checkBody('landmark', "Invalid landmark")
+                .isAlphanumeric().notEmpty().isLength({min: 3});
+            req.checkBody('type', "Invalid type").notEmpty();
 
             let error = req.validationErrors();
             if (error) {
