@@ -9,8 +9,8 @@ exports.sendEmailFunction = (data, email) => {
     const transporter = nodemailer.createTransport(smtpTransport({
         service: 'gmail',
         auth: {
-            user: 'abcd@gmail.com',
-            pass: '*********'
+            user: 'sheetalbedarkar0108@gmail.com',
+            pass: 'sheetal8446'
         },
         tls: {
             rejectUnauthorized: false
@@ -20,7 +20,7 @@ exports.sendEmailFunction = (data, email) => {
      * @description : setup e-mail data with unicode symbols
      */
     const mailOptions = {
-        from: 'abcd@gmail.com',
+        from: 'sheetalbedarkar0108@gmail.com',
         to: email,
         subject: 'Purchase Order Acceptance Letter',
         text: 'Tall Tales Book Shop\n' +
