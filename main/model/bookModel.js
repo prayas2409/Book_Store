@@ -25,12 +25,12 @@ const bookSchema = new mongoSchema(
         },
         "quantity": {
             type: Number,
-            min: 0,
+            min: 1,
             require: [true, "quantity is required"]
         },
         "price": {
             type: Number,
-            min: 0,
+            min: 1,
             require: [true, "price is required"]
         },
         "description": {

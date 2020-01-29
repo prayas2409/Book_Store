@@ -10,7 +10,6 @@ class UserController {
      * @returns {*}
      */
     addUserController(req, res, next) {
-        console.log("req",req.body)
         let responses = {};
         try {
             req.checkBody('username', "Invalid userName")
@@ -22,7 +21,7 @@ class UserController {
             req.checkBody('locality', "Invalid locality")
                 .isAlpha().notEmpty().isLength({min: 3});
             req.checkBody('address', "Invalid address")
-                .isAlphanumeric().notEmpty().isLength({min: 5}).isString();
+                .isAlphanumeric().notEmpty().isLength({min: 3}).isString();
             req.checkBody('emailId', "Invalid email")
                 .notEmpty().isEmail();
             req.checkBody('city', "Invalid cityTown")

@@ -1,16 +1,16 @@
 const nodemailer = require('nodemailer');
 let smtpTransport = require('nodemailer-smtp-transport');
 
-exports.sendEmailFunction = (data, email) => {
-
+exports.sendEmailFunction = (details) => {
     /**
      * @description : create reusable transporter object using the default SMTP transport
      */
+    console.log(details);
     const transporter = nodemailer.createTransport(smtpTransport({
         service: 'gmail',
         auth: {
-            user: 'sheetalbedarkar0108@gmail.com',
-            pass: 'sheetal8446'
+            user: 'gaikwadr576@gmail.com',
+            pass: 'Rohini@021'
         },
         tls: {
             rejectUnauthorized: false
@@ -19,25 +19,21 @@ exports.sendEmailFunction = (data, email) => {
     /**
      * @description : setup e-mail data with unicode symbols
      */
+
     const mailOptions = {
-        from: 'sheetalbedarkar0108@gmail.com',
-        to: email,
-        subject: 'Purchase Order Acceptance Letter',
-        text: 'Tall Tales Book Shop\n' +
-            'Tall Tales Book Shop\n' +
-            'Malhotra Chambers,\n' +
-            'First Floor, Govandi East,\n' +
-            'Mumbai, Maharashtra 400088\n' +
-            '[Date]\n' +
-            'Dear Manager,\n' +
-            'Hurray another order placed for us.\n' +
-            'Following is the order details to be completed.\n' +
-            'Order number | Order date | Recipient Name\n' +
-            'Sincerely,\n' +
-            'Tall Tales Book Shop\n' +
-            'tall-tales-book@gmail.com\n' +
-            '| book name | quantity | book price'
-    };
+            from: 'gaikwadr576@gmail.com',
+            to: details.email,
+            subject: 'Purchase Order Acceptance Letter',
+            html: `<h1>eBookStore</h1>` +
+                `<p> Hello ${details.userName},</p>` +
+                '<p>Your order has been successfully placed!</p><br>' +
+                '<h6>Order Details</h6>' +
+                `<p>Title : ${details.title}</p>` +
+                `<p>Order ID : ${details.orderId}</p>` +
+                `<p>Book price : ${details.price}</p>` +
+                `<p>Date : ${details.date}</p>`
+        }
+    ;
     /**
      * @description : send mail with defined transport object
      */
@@ -50,4 +46,4 @@ exports.sendEmailFunction = (data, email) => {
             return err;
         }
     });
-}
+};

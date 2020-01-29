@@ -26,13 +26,22 @@ class CartController {
                 };
                 orderService.addOrderService(filterData).then(result => {
                     response.success = true;
-                    response.message = "oder placed Successfully!";
-                    response.data = result.data
+                    response.message = "order placed Successfully!";
+                    response.data = result.data;
                     let myId = {
                         _id: result.data.bookId
                     };
+                    let mailDetails = {
+                        "result": result,
+                        "price": req.body.price,
+                        "email": req.body.email,
+                        "title": req.body.title,
+                        "userName": req.body.userName,
+                        "orderId": result.data.orderId,
+                        "date": new Date().toLocaleDateString()
+                    };
                     orderService.quantityUpdate(myId);
-                    sendMail.sendEmailFunction(result, 'gaikwadravi991@gmail.com');
+                    sendMail.sendEmailFunction(mailDetails);
                     return res.status(200).send(response);
                 }).catch((err) => {
                     response.success = false;
