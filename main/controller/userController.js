@@ -14,6 +14,8 @@ class UserController {
         try {
             req.checkBody('username', "Invalid userName")
                 .isAlpha().notEmpty().isLength({min: 3});
+            req.checkBody('password', "Invalid password")
+                .isAlpha().notEmpty().isLength({min: 6});
             req.checkBody('mobile', "Invalid mobile number ")
                 .notEmpty().isLength({min: 10, max: 10}).isNumeric();
             req.checkBody('pincode', " Invalid pinCode ")
@@ -39,6 +41,7 @@ class UserController {
             } else {
                 let filterData = {
                     "userName": req.body.username,
+                    "password": req.body.password,
                     "phoneNumber": req.body.mobile,
                     "pinCode": req.body.pincode,
                     "locality": req.body.locality,
@@ -46,7 +49,7 @@ class UserController {
                     "email": req.body.emailId,
                     "cityTown": req.body.city,
                     "landmark": req.body.landmark,
-                    // "type": req.body.type
+                    "type": req.body.type
                 };
                 service.addUserService(filterData).then(result => {
                     responses.success = true;

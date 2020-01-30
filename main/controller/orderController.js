@@ -45,7 +45,7 @@ class CartController {
                     return res.status(200).send(response);
                 }).catch((err) => {
                     response.success = false;
-                    response.message = "Failed to placed oder!";
+                    response.message = "Failed to placed order!";
                     response.error = err;
                     return res.status(404).send(response);
                 })

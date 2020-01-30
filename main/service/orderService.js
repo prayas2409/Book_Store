@@ -1,5 +1,6 @@
 const orderModel = require('../model/orderModel');
 const bookModel = require('../model/bookModel');
+
 // const sendMail = require('../middleware/sendMail');
 
 class CartService {
@@ -11,30 +12,40 @@ class CartService {
      */
     addOrderService(data, next) {
         try {
-            let orderId = Math.floor(Math.random() * 100000);
-            let filterData={
-                userId :data.userId,
-                bookId :data.bookId,
-                orderId:orderId
+
+            let findBook = {
+                find: {"_id": data.bookId}
             };
-            return orderModel.create(filterData).then(data => {;
-                return data;
-            }).catch(err => {
-                return err;
+            return bookModel.read(findBook).then(result => {
+                if (result.data[0].quantity > 0) {
+                    let orderId = Math.floor(Math.random() * 100000);
+                    let filterData = {
+                        userId: data.userId,
+                        bookId: data.bookId,
+                        orderId: orderId
+                    };
+                    return orderModel.create(filterData).then(data => {
+                        return data;
+                    }).catch(err => {
+                        return err;
+                    })
+                } else {
+                    return {message: "Out Of Stock"};
+                }
             })
         } catch (err) {
             return next(err);
         }
     }
 
-    quantityUpdate(data, next){
-        try{
-        bookModel.update(data).then(response =>{
-            return response;
-        }).catch(err =>{
-            return err;
-        })
-        }catch (err) {
+    quantityUpdate(data, next) {
+        try {
+            bookModel.update(data).then(response => {
+                return response;
+            }).catch(err => {
+                return err;
+            })
+        } catch (err) {
             return next(err);
         }
     }

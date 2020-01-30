@@ -23,6 +23,10 @@ const userSchema = new mongoSchema(
             type: String,
             require: [true, "address is required"]
         },
+        "password": {
+            type: String,
+            require: [true, "Password is required"]
+        },
         "email": {
             type: String,
             require: [true, "email is required"]
@@ -60,6 +64,24 @@ class UserModel {
                     resolve({data: result});
                 }).catch(err => {
                     reject({error: err});
+                })
+            });
+        } catch (err) {
+            return next(err);
+        }
+    }
+
+    read(req, next) {
+        try {
+            return new Promise((resolve, reject) => {
+                userDetails.find({'userName': req.username}).then(result => {
+                    if (result[0].password === req.password) {
+                        resolve({message: "User Login Successfully", data: result});
+                    } else {
+                        reject({message: "Invalid Password"});
+                    }
+                }).catch(err => {
+                    reject({message: "Invalid UserName", err: err});
                 })
             });
         } catch (err) {

@@ -5,12 +5,11 @@ exports.sendEmailFunction = (details) => {
     /**
      * @description : create reusable transporter object using the default SMTP transport
      */
-    console.log(details);
     const transporter = nodemailer.createTransport(smtpTransport({
         service: 'gmail',
         auth: {
             user: 'gaikwadr576@gmail.com',
-            pass: 'Rohini@021'
+            pass: '**********'
         },
         tls: {
             rejectUnauthorized: false
