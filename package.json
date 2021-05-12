@@ -21,7 +21,7 @@
     "mongoose": "^5.8.7",
     "mongoose-paginate": "^5.0.3",
     "morgan": "~1.9.1",
-    "nodemailer": "^6.4.2",
+    "nodemailer": "^6.4.16",
     "nodemailer-smtp-transport": "^2.7.4",
     "promise": "^8.0.3",
     "should": "^13.2.3",
